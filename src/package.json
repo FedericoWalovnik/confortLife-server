@@ -1,0 +1,19 @@
+{
+  "name": "bowl-ecommerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@firebase/firestore": "^3.7.1",
+    "express": "^4.18.2",
+    "firebase": "^9.12.1",
+    "firebase-admin": "^11.2.0",
+    "mercadopago": "^1.5.14"
+  }
+}
