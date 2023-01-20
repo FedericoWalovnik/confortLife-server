@@ -2,7 +2,7 @@ const credentials = {
   "type": "service_account",
   "project_id": "confort-life",
   "private_key_id": process.env.FIREBASE_API_KEY_ID,
-  "private_key": `-----BEGIN PRIVATE KEY-----${process.env.FIREBASE_API_KEY}-----END PRIVATE KEY-----\n`,
+  "private_key": `-----BEGIN PRIVATE KEY-----${process.env.FIREBASE_API_KEY.replace(/\\n/g, '\n')}-----END PRIVATE KEY-----\n`,
   "client_email": "firebase-adminsdk-h1cp5@confort-life.iam.gserviceaccount.com",
   "client_id": "101771906745101125234",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
