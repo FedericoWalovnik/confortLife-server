@@ -1,10 +1,10 @@
+require('dotenv').config()
 const { db } = require("./firebase.js");
 
 const express = require("express");
 
 const mercadopago = require("mercadopago");
 const PORT = process.env.PORT || 3001;
-require('dotenv').config()
 
 const app = express();
 
