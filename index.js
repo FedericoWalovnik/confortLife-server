@@ -141,6 +141,33 @@ app.post('/api/createProduct', async (req, res) => {
   }
 })
 
+// Add destacado
+app.post('/api/addDestacado', async (req, res) => {
+  const body = req.body
+
+  try {
+    await db.collection('destacados').add({
+      product: db.doc(`products/${body.id}`)
+    })
+    res.status(201).json()
+  } catch {
+    res.status(501).json()
+  }
+})
+
+app.post('/api/addSuperDestacado', async (req, res) => {
+  const body = req.body
+
+  try {
+    await db.collection('superDestacados').add({
+      product: db.doc(`products/${body.id}`)
+    })
+    res.status(201).json()
+  } catch {
+    res.status(501).json()
+  }
+})
+
 // Edit a product
 app.patch(
   '/api/editProduct/:productId',
