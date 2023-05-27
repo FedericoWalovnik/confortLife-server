@@ -47,12 +47,10 @@ app.get('/api/:category', async (req, res) => {
   }
 
   const itemsListRef = db.collection('products')
-  const snapshot = await itemsListRef
-    .where('category', '==', category)
-    .get()
+  const snapshot = await itemsListRef.where('category', '==', category).get()
 
   if (snapshot.empty) {
-    return res.status(404).send('bad request')
+    return res.status(200).send([])
   } else {
     const products = snapshot.docs.map(doc => ({
       id: doc.id,
@@ -69,9 +67,7 @@ app.get('/api/product/:productId', async (req, res) => {
     return res.sendStatus(404)
   }
 
-  const productRef = db
-    .collection('products')
-    .doc(productId)
+  const productRef = db.collection('products').doc(productId)
   const doc = await productRef.get()
 
   if (!doc.exists) {
@@ -105,8 +101,7 @@ app.post('/api/createPreference', async (req, res) => {
     })
   })
 
-  const response =
-    mercadopago.preferences.create(preference)
+  const response = mercadopago.preferences.create(preference)
   const preferenceId = (await response).body.id
 
   res.status(201).json(preferenceId)
@@ -131,10 +126,7 @@ app.post('/api/createProduct', async (req, res) => {
   const body = req.body
 
   try {
-    await db
-      .collection('products')
-      .doc(req.body.id)
-      .set(body)
+    await db.collection('products').doc(req.body.id).set(body)
     res.status(201).json()
   } catch {
     res.status(501).json()
@@ -169,41 +161,29 @@ app.post('/api/addSuperDestacado', async (req, res) => {
 })
 
 // Edit a product
-app.patch(
-  '/api/editProduct/:productId',
-  async (req, res) => {
-    const body = req.body
-    const { productId } = req.params
+app.patch('/api/editProduct/:productId', async (req, res) => {
+  const body = req.body
+  const { productId } = req.params
 
-    try {
-      await db
-        .collection('products')
-        .doc(productId)
-        .set(body)
-      res.status(201).json()
-    } catch {
-      res.status(501).json()
-    }
+  try {
+    await db.collection('products').doc(productId).set(body)
+    res.status(201).json()
+  } catch {
+    res.status(501).json()
   }
-)
+})
 
 // Delete a product
-app.delete(
-  '/api/deleteProduct/:productId',
-  async (req, res) => {
-    const { productId } = req.params
+app.delete('/api/deleteProduct/:productId', async (req, res) => {
+  const { productId } = req.params
 
-    try {
-      await db
-        .collection('products')
-        .doc(productId)
-        .delete()
-      res.status(201).json()
-    } catch {
-      res.status(501).json()
-    }
+  try {
+    await db.collection('products').doc(productId).delete()
+    res.status(201).json()
+  } catch {
+    res.status(501).json()
   }
-)
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`)
